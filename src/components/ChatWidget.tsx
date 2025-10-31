@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
-import { MessageCircle, X, Maximize2, Minimize2, Send } from "lucide-react";
+import { X, Maximize2, Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,7 +33,7 @@ export const ChatWidget = ({ workerUrl }: ChatWidgetProps) => {
   ]);
   const [inputValue, setInputValue] = useState("");
 
-  const { isStreaming, send, abort } = useChatStream(workerUrl);
+  const { isStreaming, send } = useChatStream(workerUrl);
 
   const handleSend = () => {
     if (!inputValue.trim() || isStreaming) return;

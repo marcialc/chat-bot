@@ -19,7 +19,7 @@ export function ChatMessage({ message }: { message: Message }) {
         <ReactMarkdown
           // className="text-sm leading-relaxed"
           components={{
-            a: ({ node, ...props }) => (
+            a: ({ ...props }) => (
               <a
                 {...props}
                 target="_blank"
@@ -31,7 +31,7 @@ export function ChatMessage({ message }: { message: Message }) {
                 }`}
               />
             ),
-            strong: ({ node, ...props }) => (
+            strong: ({ ...props }) => (
               <strong className="font-semibold" {...props} />
             ),
           }}
