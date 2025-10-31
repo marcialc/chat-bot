@@ -24,13 +24,7 @@ interface ChatWidgetProps {
 export const ChatWidget = ({ workerUrl }: ChatWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content: "Hello! How can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
 
   const { isStreaming, send } = useChatStream(workerUrl);
