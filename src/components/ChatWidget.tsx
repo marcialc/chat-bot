@@ -3,13 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
-import {
-  MessageCircle,
-  X,
-  Maximize2,
-  Minimize2,
-  Send,
-} from "lucide-react";
+import { MessageCircle, X, Maximize2, Minimize2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,15 +11,17 @@ import { SendIcon, XIcon, MessageCircleIcon } from "@/components/icons";
 import { useChatStream } from "@/hooks/useChatStream";
 import { ChatMessage } from "./ChatMessage";
 
-const WORKER_URL = "https://shy-water-63ef.marcialandres06.workers.dev";
-
 export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
 }
 
-export const ChatWidget = () => {
+interface ChatWidgetProps {
+  workerUrl: string
+}
+
+export const ChatWidget = ({ workerUrl }: ChatWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -37,7 +33,7 @@ export const ChatWidget = () => {
   ]);
   const [inputValue, setInputValue] = useState("");
 
-  const { isStreaming, send, abort } = useChatStream(WORKER_URL);
+  const { isStreaming, send, abort } = useChatStream(workerUrl);
 
   const handleSend = () => {
     if (!inputValue.trim() || isStreaming) return;
@@ -49,7 +45,11 @@ export const ChatWidget = () => {
     };
     const assistantId = (Date.now() + 1).toString();
 
-    setMessages((prev) => [...prev, userMsg, { id: assistantId, role: "assistant", content: "" }]);
+    setMessages((prev) => [
+      ...prev,
+      userMsg,
+      { id: assistantId, role: "assistant", content: "" },
+    ]);
     const history = messages.map(({ role, content }) => ({ role, content }));
     const pending = inputValue;
     setInputValue("");
@@ -58,7 +58,9 @@ export const ChatWidget = () => {
       history,
       onToken: (t) =>
         setMessages((prev) =>
-          prev.map((m) => (m.id === assistantId ? { ...m, content: m.content + t } : m))
+          prev.map((m) =>
+            m.id === assistantId ? { ...m, content: m.content + t } : m
+          )
         ),
     });
   };
@@ -78,7 +80,11 @@ export const ChatWidget = () => {
         className="fixed bottom-5 right-5 h-fit w-fit p-3 rounded-full bg-teal-600 shadow-lg hover:bg-teal-700 transition-all duration-200 hover:scale-110"
         size="icon"
       >
-        {isOpen ? <XIcon className="size-6" /> : <MessageCircleIcon className="size-6" />}
+        {isOpen ? (
+          <XIcon className="size-6" />
+        ) : (
+          <MessageCircleIcon className="size-6" />
+        )}
       </Button>
 
       {/* Chat Modal */}

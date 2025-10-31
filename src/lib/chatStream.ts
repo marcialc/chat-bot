@@ -12,7 +12,7 @@ export function streamChat(
 ) {
   (async () => {
     try {
-      const res = await fetch(`${workerUrl}/chat2`, {
+      const res = await fetch(`${workerUrl}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
