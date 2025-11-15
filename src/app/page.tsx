@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 
-const WORKER_URL = "https://shy-water-63ef.marcialandres06.workers.dev";
+const WORKER_URL = "https://mirafind-ai.marcialandres06.workers.dev";
 
 const WORKER_ENDPOINT = {
   chat: `${WORKER_URL}/chat`,
